@@ -2,9 +2,10 @@ package com.robertmm.mvpdroid.presenters;
 
 import android.util.Log;
 
+import com.robertmm.mvpdroid.ApplicationClass;
 import com.robertmm.mvpdroid.entities.Album;
 import com.robertmm.mvpdroid.models.AlbumListModel;
-import com.robertmm.mvpdroid.models.AlbumListModelImp;
+import com.robertmm.mvpdroid.models.AlbumListModelImpl;
 import com.robertmm.mvpdroid.ui.views.AlbumListView;
 import com.robertmm.mvpdroid.utils.Callback;
 
@@ -23,7 +24,8 @@ public class AlbumListPresenterImpl implements AlbumListPresenter {
 
     public AlbumListPresenterImpl(AlbumListView view) {
         this.view = view;
-        model = new AlbumListModelImp();
+        ApplicationClass.getInstance();
+        model = new AlbumListModelImpl();
     }
 
     @Override

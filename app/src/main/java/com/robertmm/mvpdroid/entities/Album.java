@@ -7,11 +7,11 @@ import android.os.Parcelable;
  * Created by roberto on 1/26/16.
  */
 public class Album implements Comparable<Album>, Parcelable {
-    private final int id;
     private final int userId;
+    private final int id;
     private final String title;
 
-    public Album( int id,int userId,String title) {
+    public Album(int userId,int id,String title) {
         this.id = id;
         this.userId = userId;
         this.title = title;

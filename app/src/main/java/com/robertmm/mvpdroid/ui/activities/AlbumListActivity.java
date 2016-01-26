@@ -77,6 +77,5 @@ public class AlbumListActivity extends BaseActivity implements AlbumListView {
     public void setAlbums(List<Album> albums) {
         adapter = new AlbumRecyclerAdapter(albums);
         recyclerView.setAdapter(adapter);
-        Log.d(TAG, "setAlbums: Adapter set");
     }
 }
