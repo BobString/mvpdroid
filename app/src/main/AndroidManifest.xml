@@ -2,6 +2,7 @@
     package="com.robertmm.mvpdroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".ApplicationClass"
@@ -27,6 +28,15 @@
         <activity
             android:name=".ui.activities.PhotoActivity"
             android:label="@string/photos"></activity>
+
+        <receiver android:name=".utils.ConectivityBroadcastReceiver">
+
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE">
+                </action>
+            </intent-filter>
+
+        </receiver>
 
     </application>
 
