@@ -27,7 +27,7 @@
                 android:textColor="@android:color/black" />
 
             <ImageView
-                android:id="@+id/photo_thumbnail_act"
+                android:id="@+id/photo_act"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
