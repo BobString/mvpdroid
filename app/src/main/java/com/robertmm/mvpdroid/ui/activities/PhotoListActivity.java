@@ -1,53 +1,57 @@
 package com.robertmm.mvpdroid.ui.activities;
 
 import android.os.Bundle;
-
-import com.robertmm.mvpdroid.R;
-import com.robertmm.mvpdroid.entities.Album;
-import com.robertmm.mvpdroid.presenters.AlbumListPresenter;
-import com.robertmm.mvpdroid.presenters.AlbumListPresenterImpl;
-import com.robertmm.mvpdroid.presenters.PresenterHolder;
-import com.robertmm.mvpdroid.ui.adapters.AlbumRecyclerAdapter;
-import com.robertmm.mvpdroid.ui.views.AlbumListView;
-
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
+import com.robertmm.mvpdroid.R;
+import com.robertmm.mvpdroid.entities.Photo;
+import com.robertmm.mvpdroid.presenters.AlbumListPresenter;
+import com.robertmm.mvpdroid.presenters.PhotoListPresenter;
+import com.robertmm.mvpdroid.presenters.PhotoListPresenterImpl;
+import com.robertmm.mvpdroid.presenters.PresenterHolder;
+import com.robertmm.mvpdroid.ui.adapters.PhotoRecyclerAdapter;
+import com.robertmm.mvpdroid.ui.views.PhotoListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by roberto on 1/26/16.
  */
-public class AlbumListActivity extends BaseActivity implements AlbumListView {
+public class PhotoListActivity extends BaseActivity implements PhotoListView {
 
     RecyclerView recyclerView;
-    private static final String TAG = "AlbumListActivity";
+    private int albumId;
+    public final static String EXTRA_ALBUMID = "albumId";
+    public static final String TRANSITION_SHARED_ELEMENT = "content";
+    private static final String TAG = "PhotoListActivity";
 
-    private AlbumRecyclerAdapter adapter;
-    private AlbumListPresenter presenter;
+    private PhotoRecyclerAdapter adapter;
+    private PhotoListPresenter presenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        albumId = extras.getInt(EXTRA_ALBUMID);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         presenter = createPresenter();
         presenter.create();
     }
 
-    public AlbumListPresenter createPresenter() {
-        AlbumListPresenter presenter = PresenterHolder.getInstance().
-                getPresenter(AlbumListPresenter.class);
+    public PhotoListPresenter createPresenter() {
+        PhotoListPresenter presenter = PresenterHolder.getInstance().
+                getPresenter(PhotoListPresenter.class);
         if (presenter != null) {
             presenter.setView(this);
         } else {
-            presenter = new AlbumListPresenterImpl(this);
+            presenter = new PhotoListPresenterImpl(this, albumId);
         }
         return presenter;
     }
@@ -74,8 +78,8 @@ public class AlbumListActivity extends BaseActivity implements AlbumListView {
 
 
     @Override
-    public void setAlbums(List<Album> albums) {
-        adapter = new AlbumRecyclerAdapter(albums,this);
+    public void setPhotos(List<Photo> photos) {
+        adapter = new PhotoRecyclerAdapter(photos, this);
         recyclerView.setAdapter(adapter);
     }
 }

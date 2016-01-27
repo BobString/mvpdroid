@@ -1,5 +1,9 @@
 package com.robertmm.mvpdroid.ui.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +12,8 @@ import android.widget.TextView;
 
 import com.robertmm.mvpdroid.R;
 import com.robertmm.mvpdroid.entities.Album;
+import com.robertmm.mvpdroid.ui.activities.AlbumListActivity;
+import com.robertmm.mvpdroid.ui.activities.PhotoListActivity;
 
 import java.util.List;
 
@@ -16,12 +22,14 @@ import java.util.List;
  */
 public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdapter.AlbumViewHolder> {
     private List<Album> albums;
+    private Context context;
 
-    public AlbumRecyclerAdapter(List<Album> albumList) {
+    public AlbumRecyclerAdapter(List<Album> albumList, Context context) {
         if (albumList == null) {
             throw new NullPointerException("No null list");
         }
-        albums = albumList;
+        this.albums = albumList;
+        this.context = context;
     }
 
     @Override
@@ -35,6 +43,18 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
         final Album album = albums.get(position);
         holder.title.setText(album.getTitle());
         holder.id.setText(""+album.getId());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(context, PhotoListActivity.class);
+                startIntent.putExtra(PhotoListActivity.EXTRA_ALBUMID, album.getId());
+                View innerContainer = v.findViewById(R.id.album_inner_container);
+                ActivityOptionsCompat options = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation((AlbumListActivity)context, innerContainer,
+                                PhotoListActivity.TRANSITION_SHARED_ELEMENT);
+                ActivityCompat.startActivity((AlbumListActivity) context, startIntent, options.toBundle());
+            }
+        });
     }
 
     @Override
@@ -46,7 +66,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
         return albums.get(position);
     }
 
-    final static class AlbumViewHolder extends RecyclerView.ViewHolder {
+    final static class AlbumViewHolder extends RecyclerView.ViewHolder  {
         TextView title;
         TextView id;
 
@@ -54,7 +74,6 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.album_title);
             id = (TextView) itemView.findViewById(R.id.album_id);
-
         }
 
     }

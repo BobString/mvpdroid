@@ -24,7 +24,6 @@ public class AlbumListPresenterImpl implements AlbumListPresenter {
 
     public AlbumListPresenterImpl(AlbumListView view) {
         this.view = view;
-        ApplicationClass.getInstance();
         model = new AlbumListModelImpl();
     }
 

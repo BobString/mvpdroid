@@ -18,6 +18,7 @@ android {
                     [
                             'src/main/res/layouts/base_activity',
                             'src/main/res/layouts/album_list_activity',
+                            'src/main/res/layouts/photo_list_activity',
                             'src/main/res/layouts',
                             'src/main/res'
                     ]
@@ -40,6 +41,7 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile project(":volley")
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.4'
 
 }

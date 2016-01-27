@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MvPdroid</string>
+    <string name="image_desc">thumbnail of the image</string>
 </resources>
