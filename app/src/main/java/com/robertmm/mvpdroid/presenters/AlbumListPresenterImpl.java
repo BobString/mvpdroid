@@ -6,25 +6,28 @@ import com.robertmm.mvpdroid.ApplicationClass;
 import com.robertmm.mvpdroid.entities.Album;
 import com.robertmm.mvpdroid.models.AlbumListModel;
 import com.robertmm.mvpdroid.models.AlbumListModelImpl;
+import com.robertmm.mvpdroid.ui.activities.AlbumListActivity;
 import com.robertmm.mvpdroid.ui.views.AlbumListView;
 import com.robertmm.mvpdroid.utils.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by roberto on 1/26/16.
- */
+import javax.inject.Inject;
+
+
 public class AlbumListPresenterImpl implements AlbumListPresenter {
     private static final String TAG = "AlbumListPresenterImpl";
-    private final AlbumListModel model;
 
-    private AlbumListView view;
+    AlbumListModelImpl model;
+    AlbumListView view;
+
     private List<Album> albums;
 
-    public AlbumListPresenterImpl(AlbumListView view) {
+    @Inject
+    public AlbumListPresenterImpl(AlbumListActivity view, AlbumListModelImpl model) {
         this.view = view;
-        model = new AlbumListModelImpl();
+        this.model = model;
     }
 
     @Override

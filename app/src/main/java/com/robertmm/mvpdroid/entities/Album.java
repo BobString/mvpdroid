@@ -3,15 +3,20 @@ package com.robertmm.mvpdroid.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by roberto on 1/26/16.
- */
-public class Album implements Comparable<Album>, Parcelable {
-    private final int userId;
-    private final int id;
-    private final String title;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    public Album(int userId,int id,String title) {
+public class Album extends RealmObject implements Comparable<Album>, Parcelable {
+
+    @PrimaryKey
+    private int id;
+    private int userId;
+    private String title;
+
+    public Album() {
+    }
+
+    public Album(int userId, int id, String title) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -75,10 +80,10 @@ public class Album implements Comparable<Album>, Parcelable {
         this.title = in.readString();
     }
 
-    public static final Parcelable.Creator<Album> CREATOR = new Parcelable.Creator<Album>(){
+    public static final Parcelable.Creator<Album> CREATOR = new Parcelable.Creator<Album>() {
         @Override
         public Album createFromParcel(Parcel source) {
-                return new Album(source);
+            return new Album(source);
         }
 
         @Override

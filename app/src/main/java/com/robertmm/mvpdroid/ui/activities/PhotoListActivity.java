@@ -5,8 +5,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.robertmm.mvpdroid.ApplicationClass;
 import com.robertmm.mvpdroid.R;
 import com.robertmm.mvpdroid.entities.Photo;
+import com.robertmm.mvpdroid.injection.components.DaggerAlbumListComponent;
+import com.robertmm.mvpdroid.injection.components.DaggerPhotoListComponent;
+import com.robertmm.mvpdroid.injection.modules.AlbumListModule;
+import com.robertmm.mvpdroid.injection.modules.PhotoListModule;
 import com.robertmm.mvpdroid.presenters.AlbumListPresenter;
 import com.robertmm.mvpdroid.presenters.PhotoListPresenter;
 import com.robertmm.mvpdroid.presenters.PhotoListPresenterImpl;
@@ -16,9 +21,9 @@ import com.robertmm.mvpdroid.ui.views.PhotoListView;
 
 import java.util.List;
 
-/**
- * Created by roberto on 1/26/16.
- */
+import javax.inject.Inject;
+
+
 public class PhotoListActivity extends BaseActivity implements PhotoListView {
 
     RecyclerView recyclerView;
@@ -28,8 +33,9 @@ public class PhotoListActivity extends BaseActivity implements PhotoListView {
     private static final String TAG = "PhotoListActivity";
 
     private PhotoRecyclerAdapter adapter;
-    private PhotoListPresenter presenter;
 
+    @Inject
+    PhotoListPresenterImpl presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +47,13 @@ public class PhotoListActivity extends BaseActivity implements PhotoListView {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        presenter = createPresenter();
-        presenter.create();
-    }
 
-    public PhotoListPresenter createPresenter() {
-        PhotoListPresenter presenter = PresenterHolder.getInstance().
-                getPresenter(PhotoListPresenter.class);
-        if (presenter != null) {
-            presenter.setView(this);
-        } else {
-            presenter = new PhotoListPresenterImpl(this, albumId);
-        }
-        return presenter;
+        DaggerPhotoListComponent.builder()
+                .databaseComponent(((ApplicationClass) getApplication()).getDatabaseComponent())
+                .photoListModule(new PhotoListModule(this, albumId))
+                .build().inject(this);
+
+        presenter.create();
     }
 
     @Override

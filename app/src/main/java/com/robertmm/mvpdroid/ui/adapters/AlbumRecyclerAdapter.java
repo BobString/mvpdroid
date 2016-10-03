@@ -18,9 +18,7 @@ import com.robertmm.mvpdroid.ui.activities.PhotoListActivity;
 
 import java.util.List;
 
-/**
- * Created by roberto on 1/26/16.
- */
+
 public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdapter.AlbumViewHolder> {
     private List<Album> albums;
     private Context context;

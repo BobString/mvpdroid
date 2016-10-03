@@ -12,9 +12,7 @@ import android.widget.FrameLayout;
 import com.robertmm.mvpdroid.R;
 import com.robertmm.mvpdroid.utils.ConectivityBroadcastReceiver;
 
-/**
- * Created by roberto on 1/26/16.
- */
+
 public abstract class BaseActivity extends AppCompatActivity {
     ViewGroup mainFrame;
     Toolbar toolbar;

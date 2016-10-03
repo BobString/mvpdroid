@@ -3,15 +3,20 @@ package com.robertmm.mvpdroid.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by roberto on 1/26/16.
- */
-public class Photo implements Comparable<Photo>, Parcelable {
-    private final int albumId;
-    private final int id;
-    private final String title;
-    private final String url;
-    private final String thumbnailUrl;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Photo extends RealmObject implements Comparable<Photo>, Parcelable {
+
+    @PrimaryKey
+    private int id;
+    private int albumId;
+    private String title;
+    private String url;
+    private String thumbnailUrl;
+
+    public Photo() {
+    }
 
     public Photo(int albumId, int id, String title, String url, String thumbnailUrl) {
         this.albumId = albumId;
@@ -95,7 +100,7 @@ public class Photo implements Comparable<Photo>, Parcelable {
         this.thumbnailUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>(){
+    public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>() {
         @Override
         public Photo createFromParcel(Parcel source) {
             return new Photo(source);

@@ -13,19 +13,20 @@ import com.robertmm.mvpdroid.utils.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by roberto on 1/26/16.
- */
+import javax.inject.Inject;
+
+
 public class PhotoListPresenterImpl implements PhotoListPresenter {
     private static final String TAG = "PhotoListPresenterImpl";
-    private final PhotoListModel model;
+     PhotoListModel model;
 
     private PhotoListView view;
     private List<Photo> photos;
 
-    public PhotoListPresenterImpl(PhotoListView view, int albumId) {
+    @Inject
+    public PhotoListPresenterImpl(PhotoListView view, PhotoListModel model) {
         this.view = view;
-        model = new PhotoListModelImpl(albumId);
+        this.model = model;
     }
 
     @Override
